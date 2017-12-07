@@ -15,51 +15,54 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-const url = 'mongodb://localhost:27017/todos';
+const taskRouter = require('./src/routes/taskRoutes')();
+app.use('/', taskRouter);
 
-app.get('/', function (req, res) {
-    mongodb.connect(url, function (err, db) {
-        const collection = db.collection('tasks');
-        collection.find({}).toArray(function (err, results) {
-            console.log(results);
-            res.render('index', {
-                tasks: results
-            });
-            db.close();
-        });
-    });
-});
+// const url = 'mongodb://localhost:27017/todos';
 
-app.post('/', function (req, res) {
-    mongodb.connect(url, function (err, db) {
-        const collection = db.collection('tasks');
-        if (req.body.task.trim()) {
-            collection.insertOne(req.body, function (err, results) {
-                db.close();
-            });
-        }
-    });
-    res.redirect('/');
-    console.log(req.body);
-});
+// app.get('/', function (req, res) {
+//     mongodb.connect(url, function (err, db) {
+//         const collection = db.collection('tasks');
+//         collection.find({}).toArray(function (err, results) {
+//             console.log(results);
+//             res.render('index', {
+//                 tasks: results
+//             });
+//             db.close();
+//         });
+//     });
+// });
 
-app.get('/delete/:id', function (req, res) {
-    const id = new objectId(req.params.id);
-    mongodb.connect(url, function (err, db) {
-        const collection = db.collection('tasks');
-        collection.deleteOne({
-            _id: id
-        }, function (err, results) {
-            if (err) {
-                res.status(500).send(err);
-            } else {
-                console.log('Deleted ' + req.params.id);
-            }
-        });
-        db.close();
-    });
-    res.redirect('/');
-});
+// app.post('/', function (req, res) {
+//     mongodb.connect(url, function (err, db) {
+//         const collection = db.collection('tasks');
+//         if (req.body.task.trim()) {
+//             collection.insertOne(req.body, function (err, results) {
+//                 db.close();
+//             });
+//         }
+//     });
+//     res.redirect('/');
+//     console.log(req.body);
+// });
+
+// app.get('/delete/:id', function (req, res) {
+//     const id = new objectId(req.params.id);
+//     mongodb.connect(url, function (err, db) {
+//         const collection = db.collection('tasks');
+//         collection.deleteOne({
+//             _id: id
+//         }, function (err, results) {
+//             if (err) {
+//                 res.status(500).send(err);
+//             } else {
+//                 console.log('Deleted ' + req.params.id);
+//             }
+//         });
+//         db.close();
+//     });
+//     res.redirect('/');
+// });
 
 subRouter.route('/')
     .get(function (req, res) {
