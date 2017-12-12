@@ -1,0 +1,27 @@
+{% set title = "Home" %}
+{% extends "layout.html" %}
+{% block content %}
+    <h1>To-Do List</h1>
+    <div class="container">
+        <form role="form" method="post">
+            <div class="row">
+                <input type="text" class="col-xs-10 col-sm-10" name="task" autofocus>
+                <button type="submit" class="btn btn-primary submit" >Add</button>
+            </div>
+            <!--div.row -->
+            <div class="row">
+                <!-- Start to-do list -->
+                <ul class="todo-list col-xs-12">
+                {% for task in tasks %}
+                    <li> {{task.task}}
+                        <a href="/delete/{{task._id}}">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                        </a>
+                    </li>
+                {%endfor%}
+                </ul>
+            </div>
+        </form>
+        <!-- div.row> -->
+    </div>
+{% endblock %}

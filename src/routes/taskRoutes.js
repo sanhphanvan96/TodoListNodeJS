@@ -1,5 +1,6 @@
 const express = require('express');
 const taskRouter = express.Router();
+const mongoose = require('mongoose');
 const mongodb = require('mongodb').MongoClient;
 const objectId = require('mongodb').ObjectID;
 

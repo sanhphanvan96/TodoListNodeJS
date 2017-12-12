@@ -12,7 +12,7 @@ const taskController = function () {
         mongodb.connect(url, function (err, db) {
             const collection = db.collection('tasks');
             collection.find({}).toArray(function (err, results) {
-                res.render('index', {
+                res.render('home.html', {
                     tasks: results
                 });
                 db.close();
