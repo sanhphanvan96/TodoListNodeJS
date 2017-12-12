@@ -20,6 +20,7 @@ const taskController = function () {
         });
     };
     const addTask = function (req, res) {
+        req.flash('success', 'Add task successfully');
         mongodb.connect(url, function (err, db) {
             const collection = db.collection('tasks');
             if (req.body.task.trim()) {

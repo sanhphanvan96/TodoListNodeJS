@@ -3,14 +3,14 @@ const bodyParser = require('body-parser');
 const mongodb = require('mongodb').MongoClient;
 const objectId = require('mongodb').ObjectID;
 const nunjucks = require('nunjucks');
+const session = require('express-session');
+const flash = require('express-flash');
 
 const app = express();
 const port = process.env.PORT || 5000;
 const subRouter = express.Router();
 
 app.use(express.static('public'));
-// app.set('views', './src/views');
-// app.set('view engine', 'ejs');
 
 // Configure Nunjucks
 nunjucks.configure('./src/views', {
@@ -27,6 +27,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
+// Session
+app.use(session({
+    secret: 'todos',
+}));
+
+// Use Flash Message
+app.use(flash());
 
 const taskRouter = require('./src/routes/taskRoutes')();
 app.use('/', taskRouter);
