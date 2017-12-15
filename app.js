@@ -1,10 +1,11 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongodb = require('mongodb').MongoClient;
-const objectId = require('mongodb').ObjectID;
-const nunjucks = require('nunjucks');
-const session = require('express-session');
-const flash = require('express-flash');
+import express from 'express';
+import bodyParser from 'body-parser';
+import {MongoClient as mongodb} from 'mongodb';
+import {ObjectID as objectId} from 'mongodb';
+import nunjucks from 'nunjucks';
+import session from 'express-session';
+import flash from 'express-flash';
+import router from './src/routes/routers';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -35,18 +36,18 @@ app.use(session({
 
 // Use Flash Message
 app.use(flash());
+app.use(router);
+// const taskRouter = require('./src/routes/taskRoutes')();
+// app.use('/', taskRouter);
 
-const taskRouter = require('./src/routes/taskRoutes')();
-app.use('/', taskRouter);
+// subRouter.route('/')
+//     .get(function (req, res) {
+//         console.log(__dirname);
+//         res.sendFile(__dirname + '/src/views/subRouter.html');
+//         // res.render('subRouter');
+//     });
 
-subRouter.route('/')
-    .get(function (req, res) {
-        console.log(__dirname);
-        res.sendFile(__dirname + '/src/views/subRouter.html');
-        // res.render('subRouter');
-    });
-
-app.use('/subRouter', subRouter);
+// app.use('/subRouter', subRouter);
 
 app.listen(port, function () {
     console.log('Running in port 5000');
