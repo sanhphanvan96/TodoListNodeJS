@@ -1,10 +1,11 @@
-const express = require('express');
-const taskRouter = express.Router();
-const mongoose = require('mongoose');
-const mongodb = require('mongodb').MongoClient;
-const objectId = require('mongodb').ObjectID;
+import express from 'express';
+import mongoose from 'mongoose';
+import {MongoClient as mongodb} from 'mongodb';
+import {ObjectID as objectId} from 'mongodb';
 
-const router = function () {
+const taskRouter = express.Router();
+
+export default function() {
     const taskController = require('../controllers/taskController')();
     taskRouter.use(taskController.middleware);
     taskRouter.route('/')
@@ -14,5 +15,3 @@ const router = function () {
         .get(taskController.destroyTask);
     return taskRouter;
 };
-
-module.exports = router;
